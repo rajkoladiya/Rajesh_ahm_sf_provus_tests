@@ -41,7 +41,7 @@ export default class EditQuote extends LightningElement {
         message : 'Quote updated Successfully!',
         variant : 'success'
       });
-
+      this.dispatchEvent(toastEvent);
       refreshApex(this.wiredGetRecord);
     })
     .catch((err) =>{
