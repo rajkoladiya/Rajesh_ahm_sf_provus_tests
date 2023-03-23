@@ -27,12 +27,19 @@ public with sharing class QuoteDto extends BaseDto {
   }
 
   @AuraEnabled
-  public static void saveQuote(Id recordId, Date startDate, Date endDate){
-      Quote__c quote = new Quote__c(Id = recordId);
-      quote.Start_Date__c = startDate;
-      quote.EndDate__c = endDate;
-      system.debug(quote);
-      update quote;
+  public static void saveQuote(QuoteDto quote){
+      Quote__c quo = quote.GetQuote();
+      system.debug(quo);
+      update quo;
+      system.debug(quo);
+  }
+
+  public Quote__c GetQuote() {
+    Quote__c quote = new Quote__c();
+    quote.id = super.id;
+    quote.Start_Date__c = this.startDate;
+    quote.EndDate__c = this.endDate;
+    return quote;
   }
 
   public override SObject refreshSo() {

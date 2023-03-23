@@ -23,19 +23,17 @@ export default class EditQuote extends LightningElement {
   }
 
   changeStartHandle(event){
-    this._startDate = event.target.value;
+    this.quoteData.startDate = event.target.value;
   }
 
   changeEndHandle(event){
-    this._endDate = event.target.value;
+    this.quoteData.endDate = event.target.value;
   }
 
 
   saveDetails(){
     saveQuote({
-      recordId : this.recordId,
-      startDate : startDate,
-      endDate : endDate
+      quote : this.quoteData
     })
     .then(() =>{
       const toastEvent = new ShowToastEvent({
@@ -56,7 +54,7 @@ export default class EditQuote extends LightningElement {
   @wire (getRecord , { recordId : "$recordId"})
   wiredGetRecord({error, data}){
     if(data){ 
-      this.quoteData = data;
+      this.quoteData = JSON.parse(JSON.stringify(data));
       this.isLoaded = true;
     }else if(error){
       console.log('##Error ');
